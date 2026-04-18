@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <h1>👨‍🏫 Teacher Dashboard</h1>
+            <div class="user-info">
+                <span id="teacherName"></span>
+                <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <!-- Stats -->
+        <div class="dashboard">
+            <div class="stat-card">
+                <h2 id="unpaidCount">0</h2>
+                <p>Unpaid Students</p>
+            </div>
+            <div class="stat-card">
+                <h2 id="notificationsCount">0</h2>
+                <p>Unread Notifications</p>
+            </div>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="card">
+            <div class="flex gap-2 mb-3">
+                <button class="btn btn-primary" onclick="showTab('unpaid')">Unpaid Students</button>
+                <button class="btn btn-secondary" onclick="showTab('notifications')">Notifications</button>
+            </div>
+        </div>
+        
+        <!-- Unpaid Students Tab -->
+        <div id="unpaidTab">
+            <h2 class="mb-3">Students with Pending Payments</h2>
+            <div class="card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Email</th>
+                            <th>Exam</th>
+                            <th>Fee</th>
+                            <th>Applied On</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="unpaidTable"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Notifications Tab -->
+        <div id="notificationsTab" class="hidden">
+            <h2 class="mb-3">Notifications from Admin</h2>
+            <div id="notificationsList"></div>
+        </div>
+    </div>
+    
+    <!-- Reminder Modal -->
+    <div id="reminderModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeReminderModal()">&times;</span>
+            <h2>Send Payment Reminder</h2>
+            <form onsubmit="sendReminder(event)">
+                <input type="hidden" id="reminder_student_id">
+                <div class="form-group">
+                    <label>Student Name</label>
+                    <input type="text" class="form-control" id="reminder_student_name" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea class="form-control" id="reminder_message" rows="4" required>Dear student, this is a reminder to complete your exam fee payment at the earliest.</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Reminder</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="js/teacher.js"></script>
+</body>
+</html>

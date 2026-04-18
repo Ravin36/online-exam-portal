@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <h1>📚 Student Dashboard</h1>
+            <div class="user-info">
+                <span id="studentName"></span>
+                <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <!-- Tabs -->
+        <div class="card">
+            <div class="flex gap-2 mb-3">
+                <button class="btn btn-primary" onclick="showTab('available')">Available Exams</button>
+                <button class="btn btn-secondary" onclick="showTab('applications')">My Applications</button>
+                <button class="btn btn-secondary" onclick="showTab('results')">Results</button>
+                <button class="btn btn-secondary" onclick="showTab('notifications')">Notifications</button>
+            </div>
+        </div>
+        
+        <!-- Available Exams Tab -->
+        <div id="availableTab">
+            <h2 class="mb-3">Available Exams</h2>
+            <div id="examsList" class="card-grid"></div>
+        </div>
+        
+        <!-- My Applications Tab -->
+        <div id="applicationsTab" class="hidden">
+            <h2 class="mb-3">My Applications</h2>
+            <div id="applicationsList"></div>
+        </div>
+        
+        <!-- Results Tab -->
+        <div id="resultsTab" class="hidden">
+            <h2 class="mb-3">Exam Results</h2>
+            <div id="resultsList"></div>
+        </div>
+        
+        <!-- Notifications Tab -->
+        <div id="notificationsTab" class="hidden">
+            <h2 class="mb-3">Notifications</h2>
+            <div id="notificationsList"></div>
+        </div>
+    </div>
+    
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePaymentModal()">&times;</span>
+            <h2>Payment Details</h2>
+            <form onsubmit="submitPayment(event)">
+                <input type="hidden" id="payment_app_id">
+                <div class="form-group">
+                    <label>Transaction ID</label>
+                    <input type="text" class="form-control" id="transaction_id" required>
+                </div>
+                <p class="alert alert-info">
+                    Please enter your payment transaction ID after completing the payment.
+                </p>
+                <button type="submit" class="btn btn-success">Submit Payment</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="js/student.js"></script>
+</body>
+</html>

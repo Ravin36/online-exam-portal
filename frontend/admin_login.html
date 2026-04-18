@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="role-nav">
+                <a href="student_login.html">Student</a>
+                <a href="teacher_login.html">Teacher</a>
+                <a href="admin_login.html" class="active">Admin</a>
+            </div>
+
+            <div id="loginForm" class="login-form-card">
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" id="username" required>
+                    </div>
+                    <div class="form-group password-toggle-container">
+                        <label>Password</label>
+                        <div class="password-toggle-input">
+                            <input type="password" class="form-control" id="password" required>
+                            <button type="button" class="btn btn-sm btn-secondary password-toggle-btn" data-target="password">Show</button>
+                        </div>
+                    </div>
+                    <div class="login-checkbox">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe" class="remember-text">Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">LOGIN</button>
+                </form>
+            </div>
+
+            <div id="registerForm" class="hidden">
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" class="form-control" id="reg_fullname" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" id="reg_email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" id="reg_username" required>
+                    </div>
+                    <div class="form-group password-toggle-container">
+                        <label>Password</label>
+                        <div class="password-toggle-input">
+                            <input type="password" class="form-control" id="reg_password" required>
+                            <button type="button" class="btn btn-sm btn-secondary password-toggle-btn" data-target="reg_password">Show</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select class="form-control" id="reg_role" required>
+                            <option value="student">Student</option>
+                            <option value="teacher">Teacher</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Register</button>
+                </form>
+                <p class="text-center mt-2">
+                    <a href="#" onclick="showTab('login')">Back to login</a>
+                </p>
+            </div>
+
+            <div id="resetForm" class="hidden">
+                <form onsubmit="handleResetPassword(event)">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" id="reset_email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Send Reset Link</button>
+                </form>
+                <p class="text-center mt-2">
+                    <a href="#" onclick="showTab('login')">Back to login</a>
+                </p>
+            </div>
+
+            <div class="login-tabs">
+                <a href="#" class="tab-item active" data-tab="login" onclick="showTab(event, 'login')">LOGIN</a>
+                <a href="#" class="tab-item" data-tab="signup" onclick="showTab(event, 'signup')">SIGNUP</a>
+                <a href="#" class="tab-item" data-tab="reset" onclick="showTab(event, 'reset')">RESET PASSWORD</a>
+                <a href="index.html" class="tab-item">LOGIN OPTIONS</a>
+            </div>
+
+            <p class="text-center mt-3">
+                <a href="index.html">Back to login options</a>
+            </p>
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>

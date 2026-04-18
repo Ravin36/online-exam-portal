@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <h1>👨‍💼 Admin Dashboard</h1>
+            <div class="user-info">
+                <span id="adminName"></span>
+                <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <!-- Stats Dashboard -->
+        <div class="dashboard">
+            <div class="stat-card">
+                <h2 id="totalApplications">0</h2>
+                <p>Total Applications</p>
+            </div>
+            <div class="stat-card">
+                <h2 id="pendingPayments">0</h2>
+                <p>Pending Payments</p>
+            </div>
+            <div class="stat-card">
+                <h2 id="approvedCount">0</h2>
+                <p>Approved</p>
+            </div>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="card">
+            <div class="flex gap-2 mb-3">
+                <button class="btn btn-primary" onclick="showTab('applications')">Applications</button>
+                <button class="btn btn-secondary" onclick="showTab('unpaid')">Unpaid Students</button>
+                <button class="btn btn-secondary" onclick="showTab('exams')">Manage Exams</button>
+            </div>
+        </div>
+        
+        <!-- Applications Tab -->
+        <div id="applicationsTab">
+            <h2 class="mb-3">Exam Applications</h2>
+            <div class="card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Email</th>
+                            <th>Exam</th>
+                            <th>Payment Status</th>
+                            <th>Approval Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="applicationsTable"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Unpaid Students Tab -->
+        <div id="unpaidTab" class="hidden">
+            <h2 class="mb-3">Unpaid Students</h2>
+            <div class="card">
+                <button class="btn btn-warning mb-3" onclick="notifyTeacher()">
+                    Notify Teacher About All Unpaid
+                </button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Email</th>
+                            <th>Exam</th>
+                            <th>Application Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="unpaidTable"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Manage Exams Tab -->
+        <div id="examsTab" class="hidden">
+            <h2 class="mb-3">Manage Exams</h2>
+            <button class="btn btn-primary mb-3" onclick="showCreateExamForm()">
+                Create New Exam
+            </button>
+            
+            <div id="createExamForm" class="card hidden">
+                <h3>Create New Exam</h3>
+                <form onsubmit="createExam(event)">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" class="form-control" id="exam_title" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" id="exam_desc" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Fee (₹)</label>
+                        <input type="number" class="form-control" id="exam_fee" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Duration (minutes)</label>
+                        <input type="number" class="form-control" id="exam_duration" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Total Marks</label>
+                        <input type="number" class="form-control" id="exam_marks" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Passing Marks</label>
+                        <input type="number" class="form-control" id="exam_passing" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Exam Date & Time</label>
+                        <input type="datetime-local" class="form-control" id="exam_date" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Create Exam</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideCreateExamForm()">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/admin.js"></script>
+</body>
+</html>
