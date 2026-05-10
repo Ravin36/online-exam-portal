@@ -2,6 +2,11 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional, List
 from datetime import datetime
 from enum import Enum
+from sqlalchemy import Column, Integer, String, Float, DateTime, Boolean, Text, ForeignKey, Enum as SQLEnum
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+
+Base = declarative_base()
 
 class UserRole(str, Enum):
     student = "student"
@@ -18,6 +23,78 @@ class ApprovalStatus(str, Enum):
     pending = "pending"
     approved = "approved"
     rejected = "rejected"
+
+# SQLAlchemy Database Models
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    email = Column(String, unique=True, index=True)
+    password_hash = Column(String)
+    full_name = Column(String)
+    role = Column(SQLEnum(UserRole), default=UserRole.student)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    is_active = Column(Boolean, default=True)
+
+class Exam(Base):
+    __tablename__ = "exams"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    description = Column(Text)
+    fee = Column(Float)
+    duration_minutes = Column(Integer)
+    total_marks = Column(Integer)
+    passing_marks = Column(Integer)
+    exam_date = Column(DateTime)
+    is_active = Column(Boolean, default=True)
+    created_by = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class Application(Base):
+    __tablename__ = "applications"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    exam_id = Column(Integer, ForeignKey("exams.id"))
+    payment_status = Column(SQLEnum(PaymentStatus), default=PaymentStatus.pending)
+    approval_status = Column(SQLEnum(ApprovalStatus), default=ApprovalStatus.pending)
+    transaction_id = Column(String, nullable=True)
+    applied_at = Column(DateTime, default=datetime.utcnow)
+
+class Question(Base):
+    __tablename__ = "questions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    exam_id = Column(Integer, ForeignKey("exams.id"))
+    question_text = Column(Text)
+    option_a = Column(String)
+    option_b = Column(String)
+    option_c = Column(String)
+    option_d = Column(String)
+    correct_answer = Column(String)
+    marks = Column(Integer, default=1)
+
+class Answer(Base):
+    __tablename__ = "answers"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    exam_id = Column(Integer, ForeignKey("exams.id"))
+    question_id = Column(Integer, ForeignKey("questions.id"))
+    answer = Column(String)
+    is_correct = Column(Boolean)
+    marks_obtained = Column(Float, default=0)
+
+class Notification(Base):
+    __tablename__ = "notifications"
+
+    id = Column(Integer, primary_key=True, index=True)
+    recipient_id = Column(Integer, ForeignKey("users.id"))
+    message = Column(Text)
+    is_read = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
 # User Models
 class UserCreate(BaseModel):
